@@ -34,6 +34,7 @@ def lite_web_sentiment_estimator(url):
     #ASSIGNING INITAL POLARITY WITH PRE-DEFINED POS/NEG WORDBANKS
     df['Polarity'] = 0
     
+    #DEFINING CUSTOM WORDBANKS
     positive_emotions = ['curious', 'attract', 'surprise', 'hope', 'Hope', 
                      'thank', 'joy', 'relief', 'proud', 'Joy', 
                      'generous', 'sympath', 'love', 'amuse', 'Love',
@@ -46,7 +47,7 @@ def lite_web_sentiment_estimator(url):
                      'disgust', 'irrit', 'anxious', 'anxiety', 'helpless',
                      'worry', 'doubt', 'shame', 'bored', 'despar', 'hurt']
  
-    #PROCESSING PRE-DEFINED POSITIVE AND NEGATIVE WORDBANKS
+    #PROCESSING ADDITIONAL PRE-DEFINED POSITIVE AND NEGATIVE WORDBANKS
     pos_bank = 'https://raw.githubusercontent.com/c-trl/nlp-with-xanga-entries/master/positive_wordbank.txt'
     pos_words_text = requests.get(pos_bank).text
     pos_soup = bs(pos_words_text) #converts string variable to unicode
