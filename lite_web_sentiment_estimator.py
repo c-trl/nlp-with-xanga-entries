@@ -45,11 +45,21 @@ def lite_web_sentiment_estimator(url):
                      'miser', 'jealous', 'cruel', 'hate', 'anger', 'annoyed', 'Anger', 'Hate',
                      'disgust', 'irrit', 'anxious', 'anxiety', 'helpless',
                      'worry', 'doubt', 'shame', 'bored', 'despar', 'hurt']
-    g = open('positive_words.txt')
-    positive_words = nltk.word_tokenize(g.read())
+ 
+    #PROCESSING PRE-DEFINED POSITIVE AND NEGATIVE WORDBANKS
+    pos_bank = 'https://raw.githubusercontent.com/c-trl/nlp-with-xanga-entries/master/positive_wordbank.txt'
+    pos_words_text = requests.get(pos_bank).text
+    pos_soup = bs(pos_words_text) #converts string variable to unicode
+    souped_pos_words = pos_soup.get_text() #stores unicode text in variable 'souped_text'
+    encoded_pos_words = souped_pos_words.encode('utf-8') #converts unicode text to utf-8
+    positive_words = nltk.word_tokenize(encoded_pos_words) #tokenizes unicode text, separating each word and turning it into an item in list 'tokens'
 
-    h = open('negative_words.txt')
-    negative_words = nltk.word_tokenize(h.read())
+    neg_bank = 'https://raw.githubusercontent.com/c-trl/nlp-with-xanga-entries/master/negative_wordbank.txt'    
+    neg_words_text = requests.get(neg_bank).text
+    neg_soup = bs(neg_words_text) #converts string variable to unicode
+    souped_neg_words = neg_soup.get_text() #stores unicode text in variable 'souped_text'
+    encoded_neg_words = souped_neg_words.encode('utf-8') #converts unicode text to utf-8
+    negative_words = nltk.word_tokenize(encoded_neg_words)    
     
     df.ix[df.Word.isin(positive_emotions), 'Polarity'] = 1
     df.ix[df.Word.isin(negative_emotions), 'Polarity'] = -1
